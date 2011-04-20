@@ -8,7 +8,6 @@ import com.google.inject.servlet.GuiceServletContextListener
 class MyGuiceServletConfig extends GuiceServletContextListener {
 
   override def contextInitialized(servletContextEvent: javax.servlet.ServletContextEvent) = {
-    println("contextInitialized")
     getInjector()
   }
 
