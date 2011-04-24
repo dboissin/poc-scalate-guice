@@ -4,7 +4,7 @@ import org.atmosphere.annotation.Broadcast
 import org.atmosphere.annotation.Suspend
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.BroadcasterFactory
-import org.atmosphere.cpr.DefaultBroadcaster
+import org.atmosphere.jersey.JerseyBroadcaster
 import org.atmosphere.jersey.Broadcastable
 import org.codehaus.jettison.json.JSONException
 import org.codehaus.jettison.json.JSONObject
@@ -12,8 +12,9 @@ import org.codehaus.jettison.json.JSONObject
 import javax.ws.rs.GET
 import javax.ws.rs.POST
 import javax.ws.rs.Path
-import javax.ws.rs.PathParam
+import javax.ws.rs.FormParam
 import javax.ws.rs.Produces
+import poc.scalatra.dto.SimpleDTO
 
 @Path("/topic")
 @com.google.inject.Singleton
@@ -21,13 +22,17 @@ import javax.ws.rs.Produces
 class MessageResource {
 
 
-    @GET
-   def titi(): String = {
-    "{blalfksl: 'felf'}"
+  @GET
+  @Suspend(outputComments = false, resumeOnBroadcast = false)
+  def listen():Broadcastable = {
+    val broadcaster = BroadcasterFactory.getDefault().lookup(classOf[JerseyBroadcaster], "topic", true)
+    new Broadcastable(new SimpleDTO("Connected !"), broadcaster)
   }
-//    @Suspend(outputComments = true, resumeOnBroadcast = false)
-//    def listen():Broadcastable = {
-//      val broadcaster = BroadcasterFactory.getDefault().lookup(classOf[DefaultBroadcaster], "titi", true)
-//      new Broadcastable(new JSONObject().put("from", "system").put("msg", "Connected !"), broadcaster)
-//    }
+
+  @POST
+  @Broadcast
+  def publish(@FormParam("msg") message: String):Broadcastable = {
+    val broadcaster = BroadcasterFactory.getDefault().lookup(classOf[JerseyBroadcaster], "topic", true)
+    new Broadcastable(new SimpleDTO("Message : " + message), broadcaster)
+  }
 }
