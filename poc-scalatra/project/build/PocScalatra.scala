@@ -1,6 +1,7 @@
 import sbt._
+import de.element34.sbteclipsify._
 
-class PocScalatra(info: ProjectInfo) extends DefaultWebProject(info) {
+class PocScalatra(info: ProjectInfo) extends DefaultWebProject(info) with Eclipsify {
   val javanetRepos = "JavaNet Repository" at "http://download.java.net/maven/2"
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
   // scalatra
@@ -11,7 +12,7 @@ class PocScalatra(info: ProjectInfo) extends DefaultWebProject(info) {
 
   val guice = "com.google.inject" % "guice" % "3.0"
   val guiceServlet = "com.google.inject.extensions" % "guice-servlet" % "3.0"
-  val scalaGuice = "scala-guice" % "scala-guice" % "0.1" from "http://guice-maven.googlecode.com/svn/trunk/scala-guice/scala-guice_2.8.0-0.1.jar"
+  // val scalaGuice = "scala-guice" % "scala-guice" % "0.1" from "http://guice-maven.googlecode.com/svn/trunk/scala-guice/scala-guice_2.8.0-0.1.jar"
 
   val atmosphereRuntime = "org.atmosphere" % "atmosphere-runtime" % "0.7.1"
   val atmosphereGuice = "org.atmosphere" % "atmosphere-guice" % "0.7.1"

@@ -1,19 +1,9 @@
 package poc.scalatra.resource
 
-import org.atmosphere.annotation.Broadcast
-import org.atmosphere.annotation.Suspend
-import org.atmosphere.cpr.Broadcaster
-import org.atmosphere.cpr.BroadcasterFactory
-import org.atmosphere.jersey.JerseyBroadcaster
-import org.atmosphere.jersey.Broadcastable
-import org.codehaus.jettison.json.JSONException
-import org.codehaus.jettison.json.JSONObject
-
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.FormParam
-import javax.ws.rs.Produces
+import javax.ws.rs.{Produces, FormParam, Path, POST, GET}
+import org.atmosphere.annotation.{Suspend, Broadcast}
+import org.atmosphere.cpr.{BroadcasterFactory, Broadcaster}
+import org.atmosphere.jersey.{Broadcastable, JerseyBroadcaster}
 import poc.scalatra.dto.SimpleDTO
 
 @Path("/topic")
