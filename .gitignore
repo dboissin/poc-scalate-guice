@@ -1,0 +1,22 @@
+target/
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.gwt/
+*.launch
+.scala_dependencies
+
+# CDT-specific
+.cproject
+

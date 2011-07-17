@@ -1,32 +1,36 @@
-/**
- * Copyright (C) 2009-2011 the original author or authors.
- * See the notice.md file distributed with this work for additional
- * information regarding copyright ownership.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package poc.resources
 
-import javax.ws.rs.Path
-
 import com.sun.jersey.api.view.ImplicitProduces
+import javax.ws.rs.Path
+import javax.ws.rs.GET
+import com.sun.jersey.api.view.Viewable
+import javax.ws.rs.core.Response
+import javax.ws.rs.POST
+import javax.ws.rs.PUT
+import javax.ws.rs.FormParam
 
 /**
  * The root resource bean
  */
-@Path("/")
+@Path("/home")
 @ImplicitProduces(Array("text/html;qs=5"))
 class HomeResource {
 
+  @GET
+  def get = new Viewable("index", this)
+
+  @POST
+  def send(@FormParam("msg") name: String):Response = {
+    println("In send method.")
+    Response.ok(">>>" + name + " Data posted. Test refresh jrebel !!!\n" + test("bli") + "\n" + test("blip") + "\n").build()
+  }
+  
+  @PUT
+  def test(@FormParam("test") test: String): String = test match {
+    case "blip" => "blop\n"
+    case _ => "NOP\n"  
+  }
+  
+  def someText = "SOME TEXT"
   
 }
