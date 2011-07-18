@@ -1,32 +1,34 @@
 package poc.resources
 
-import com.sun.jersey.api.view.ImplicitProduces
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.GET
+import javax.ws.rs.Produces
 import com.sun.jersey.api.view.Viewable
-import poc.dto.TimetableDTO
 
 @Path("/timetable")
-@ImplicitProduces(Array("text/html;qs=5"))
-class TimetableResource {
+class TimetableResource extends DefaultRepresentations {
   
-  def blip() = {
-    new TimetableDTO("year", "week", "name")
+  @GET
+  def get() = new Viewable("index", this)
+
+  @Path("{year}/{week}/{name}")
+  def timetable(
+	@PathParam("year") year: String,
+	@PathParam("week") week: String,
+	@PathParam("name") name: String
+  )= {
+	Timetable(year, week, name)  
   }
-  
-    @GET
-  /*@Path("/")
-  def cashierTimetable() = {
-  */
-  @Path("/{year}/{week}/{name}")
+
+
+  @Path("{year}")
   def cashierTimetable(
-      @PathParam("year") year:String,
-      @PathParam("week") week:String,
-      @PathParam("name") name:String) = {
+      @PathParam("year") year:String
+  ) = {
     println("cashier timetable")
-   new Viewable("index", blip)
    // new TimetableDTO("2011", "34", "Blip")
+	Item(year, "Name of Item: " + year)
   }
   
 }
