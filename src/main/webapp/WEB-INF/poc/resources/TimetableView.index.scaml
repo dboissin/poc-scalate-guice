@@ -1,0 +1,27 @@
+-@import val it: TimetableView
+
+%html
+
+  %head
+    %script{:type => "text/javascript",
+            :src  => "/js/jquery-1.5.1.min.js"}
+    %script{:type => "text/javascript",
+            :src  => "/js/jquery-ui-1.8.14.custom.min.js"}
+    %script{:type => "text/javascript",
+            :src  => "/js/timetable.js"}
+    %link(href={uri("/css/ui-lightness/jquery-ui-1.8.14.custom.css")} rel="stylesheet" type="text/css")
+    %link(href={uri("/css/timetable.css")} rel="stylesheet" type="text/css")
+    
+  %body
+  %h1 Timetable #{name} 
+  
+  %p
+  #{workingTime.head}
+  
+  %p
+  %span(id="select-result") Empty selection
+  
+  %ol(id="selectable")
+    - for(i <- 1 to 48)
+      %li(class="ui-widget-content" id={"ih-" + i} )
+      

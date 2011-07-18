@@ -5,9 +5,14 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.GET
 import javax.ws.rs.Produces
 import com.sun.jersey.api.view.Viewable
+import poc.service.TimetableService
+import com.google.inject.Inject
 
 @Path("/timetable")
 class TimetableResource extends DefaultRepresentations {
+  
+  @Inject
+  var service: TimetableService = _
   
   @GET
   def get() = new Viewable("index", this)
@@ -17,8 +22,8 @@ class TimetableResource extends DefaultRepresentations {
 	@PathParam("year") year: String,
 	@PathParam("week") week: String,
 	@PathParam("name") name: String
-  )= {
-	Timetable(year, week, name)  
+  ) = {
+    service.cashierTimetable(year, week, name)
   }
 
 
