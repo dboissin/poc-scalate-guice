@@ -15,12 +15,23 @@
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	width: 60%;
+/* 	width: 60%; */
 }
 
+/* #selectable li { */
+/* 	margin: 3px; */
+/* 	padding: 0.4em; */
+/* 	font-size: 1.4em; */
+/* 	height: 18px; */
+/* } */
+
 #selectable li {
-	margin: 3px;
-	padding: 0.4em;
-	font-size: 1.4em;
-	height: 18px;
+	margin: 1px;
+	border: 1px solid black;
+	padding: 1px;
+	float: left;
+	width: 20px;
+	height: 30px;
+	font-size: 4em;
+	text-align: center;
 }

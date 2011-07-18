@@ -1,7 +1,6 @@
 -@import val it: TimetableView
 
 %html
-
   %head
     %script{:type => "text/javascript",
             :src  => "/js/jquery-1.5.1.min.js"}
@@ -19,9 +18,11 @@
   #{workingTime.head}
   
   %p
-  %span(id="select-result") Empty selection
+    %span(id="select-result") Empty selection
   
+  / TODO refactor code below in a snippet object
   %ol(id="selectable")
-    - for(i <- 1 to 48)
-      %li(class="ui-widget-content" id={"ih-" + i} )
+    - for(i <- 8 to 20)
+      - for(j <- 0 to 1)
+        %li(class="ui-widget-content" id={weekStartDateIdx.get + String.format("%02d", int2Integer(i)) + String.format("%02d", int2Integer((j * 30)))})
       
