@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 
 object Snippets {
 
-  def generateTimetable(year: Int, month: Int, day: Int): String = {
+  def generateTimetable(year: Int, month: Int, day: Int) = {
     val cal = new GregorianCalendar(year, month - 1, day, 8, 30)
     
     def listDate(calendar: Calendar, idxDay: Int, idxHalfHour: Int): List[Date] = (idxDay, idxHalfHour) match {
@@ -22,7 +22,10 @@ object Snippets {
         calendar.getTime::listDate(c, d, hh + 1)
     }
     
-    date2String(listDate(cal, 0, 0)).reduceLeft(_ + ", " + _)
+    val df = new SimpleDateFormat("yyyyMMddHHmm")
+    val html = listDate(cal, 0, 0) map (d => 
+      <li id={df.format(d.getTime)} class="ui-widget-content"></li>)
+    <ol id="selectable">{html}</ol>
   }
 
   /**

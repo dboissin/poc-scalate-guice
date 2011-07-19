@@ -7,6 +7,8 @@ import javax.ws.rs.Produces
 import com.sun.jersey.api.view.Viewable
 import poc.service.TimetableService
 import com.google.inject.Inject
+import javax.ws.rs.FormParam
+import javax.ws.rs.POST
 
 @Path("/timetable")
 class TimetableResource extends DefaultRepresentations {
@@ -34,6 +36,15 @@ class TimetableResource extends DefaultRepresentations {
     println("cashier timetable")
    // new TimetableDTO("2011", "34", "Blip")
 	Item(year, "Name of Item: " + year)
+  }
+  
+  @POST
+  @Path("/selection")
+  def timetableSelection(
+      @FormParam("name") name: String,
+      @FormParam("selection") selection: String,
+      @FormParam("weekidx") startWeekIdx: String) = {
+    service.saveSelection(name, selection, startWeekIdx)
   }
   
 }

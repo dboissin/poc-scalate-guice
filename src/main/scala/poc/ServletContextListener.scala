@@ -1,10 +1,12 @@
 package poc
 
-import _root_.com.google.inject.Guice
-import _root_.com.google.inject.servlet.GuiceServletContextListener
-import _root_.org.fusesource.scalate.guice.ScalateModule
-import poc.service.TimetableService
+import org.fusesource.scalate.guice.ScalateModule
+
+import com.google.inject.servlet.GuiceServletContextListener
+import com.google.inject.Guice
+
 import poc.service.impl.TimetableServiceImpl
+import poc.service.TimetableService
 
 class ServletContextListener extends GuiceServletContextListener {
   def getInjector = Guice.createInjector(new ScalateModule() {
@@ -12,9 +14,11 @@ class ServletContextListener extends GuiceServletContextListener {
     override def configureServlets() = {
     	super.configureServlets
     	bind(classOf[TimetableService]).to(classOf[TimetableServiceImpl])
+//    	bind(classOf[MessageBodyReader[Object]]).to(classOf[JacksonJsonProvider])
+//        bind(classOf[MessageBodyWriter[Object]]).to(classOf[JacksonJsonProvider])
     }
     
-    override def resourcePackageNames = "poc.resources" :: super.resourcePackageNames
+    override def resourcePackageNames = "poc.resources" :: "org.codehaus.jackson.jaxrs" :: super.resourcePackageNames
     
   })
 }

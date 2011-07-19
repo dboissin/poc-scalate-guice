@@ -1,4 +1,5 @@
 -@import val it: TimetableView
+- import Snippets._
 
 %html
   %head
@@ -12,17 +13,14 @@
     %link(href={uri("/css/timetable.css")} rel="stylesheet" type="text/css")
     
   %body
-  %h1 Timetable #{name} 
-  
+  %h1 Timetable 
+
+  %span(id="name") #{name} 
+
   %p
   #{workingTime.head}
-  
+
   %p
     %span(id="select-result") Empty selection
-  
-  / TODO refactor code below in a snippet object
-  %ol(id="selectable")
-    - for(i <- 8 to 20)
-      - for(j <- 0 to 1)
-        %li(class="ui-widget-content" id={weekStartDateIdx.get + String.format("%02d", int2Integer(i)) + String.format("%02d", int2Integer((j * 30)))})
-      
+
+  #{generateTimetable(2011, 7, 18)}
