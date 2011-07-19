@@ -4,7 +4,7 @@ import java.util.Date
 
 case class TimetableView (
 	name: String,
-	workingTime: List[Date],
+	workingTime: List[(Date, Date)],
 	weekStartDateIdx: Option[String]
 ) extends DefaultRepresentations {
 }

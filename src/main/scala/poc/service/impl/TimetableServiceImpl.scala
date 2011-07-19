@@ -10,7 +10,7 @@ class TimetableServiceImpl extends TimetableService {
   def cashierTimetable(year: String, week: String, name: String): TimetableView = { 
     println("TimetableServiceImpl - cashierTimetable method")
     val startWeekIdx = new SimpleDateFormat("yyyyMMdd").format(new Date().getTime())
-    TimetableView(name, new Date()::Nil, Some(startWeekIdx)) //None)
+    TimetableView(name, (new Date(), new Date())::Nil, Some(startWeekIdx)) //None)
   }
 
 }

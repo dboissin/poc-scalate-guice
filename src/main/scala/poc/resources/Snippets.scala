@@ -22,8 +22,52 @@ object Snippets {
         calendar.getTime::listDate(c, d, hh + 1)
     }
     
+    date2String(listDate(cal, 0, 0)).reduceLeft(_ + ", " + _)
+  }
+
+  /**
+   * Convert a list of working time in a list of working time range.
+   * 30 * 60 * 1000 = 1800000
+   */
+  def groupWorkingTimeList(dates: List[Date], timeOffset: Int = 1800000): List[(Date, Date)] = {
+    dates.foldRight(List[(Date, Date)]()) {
+      (d, list) => list match {
+        case (begin, end)::tail =>
+          if (begin.getTime == (d.getTime + timeOffset))
+            (d, end)::tail
+          else
+            (d, d)::list
+        case Nil => (d, d)::list
+      }
+    }
+  }
+
+  /**
+   * Convert a list of range time to a list of index time.
+   * 30 * 60 * 1000 = 1800000
+   */
+  def detailWorkingTimeList(dates: List[(Date, Date)], timeOffset: Int = 1800000): List[Date] = {
+    dates flatMap { case (begin, end) => 
+      val nb = (end.getTime - begin.getTime) / timeOffset 
+      var result = end::Nil
+	  for (i <- 1 to nb.asInstanceOf[Int])
+	    result = new Date(end.getTime - (timeOffset * i)) :: result
+	  result
+    }
+  }
+
+  def string2Date(dates: List[String]): List[Date] = {
     val df = new SimpleDateFormat("yyyyMMddHHmm")
-    val dates = listDate(cal, 0, 0) map (d => df.format(d.getTime)) 
-    dates reduceLeft(_ + ", " + _)
+    dates map (d => df.parse(d))
+  }
+
+  def date2String(dates: List[Date]): List[String] = {
+    val df = new SimpleDateFormat("yyyyMMddHHmm")
+    dates map (d => df.format(d.getTime))
+  }
+
+  def dateTuple2String(dates: List[(Date, Date)]): List[String] = {
+    val df = new SimpleDateFormat("yyyyMMddHHmm")
+    dates map {case (d1, d2) => df.format(d1.getTime) + ", " + df.format(d2.getTime)}
   }
 }
