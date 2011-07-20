@@ -4,11 +4,10 @@ import java.util.GregorianCalendar
 import java.util.Calendar
 import java.util.Date
 import java.text.SimpleDateFormat
+import scala.xml.NodeBuffer
 
 object Snippets {
 
-//  def generateTimetable(year: Int, month: Int, day: Int) = {
-//    val cal = new GregorianCalendar(year, month - 1, day, 8, 30)
   def generateTimetable(date: Date) = {
     val cal = new GregorianCalendar()
     cal.setTime(date)
@@ -28,7 +27,19 @@ object Snippets {
     val df = new SimpleDateFormat("yyyyMMddHHmm")
     val html = listDate(cal, 0, 0) map (d => 
       <li id={df.format(d.getTime)} class="ui-widget-content"></li>)
-    <ol id="selectable">{html}</ol>
+   
+    genTimetableHeader(cal) + <ol id="selectable">{html}</ol>
+  }
+  
+  private def genTimetableHeader(cal: java.util.GregorianCalendar): scala.xml.NodeBuffer = {
+      
+    var header = new NodeBuffer
+    cal.add(Calendar.MINUTE, 30)
+    for (_ <- 1 to 12) {
+      header += <li>{cal.get(Calendar.HOUR_OF_DAY)}h</li>
+      cal.add(Calendar.MINUTE, 60)
+    }
+     <ul id="header">{header}</ul><div style="clear:both;"></div>
   }
 
   /**

@@ -23,8 +23,6 @@ class TimetableResource extends DefaultRepresentations {
   @Inject
   var service: TimetableService = _
   
-//  implicit def string2Long(rs: StringOps): Long = rs.toLong
-//  
   @GET
   def get() = new Viewable("index", this)
 

@@ -1,18 +1,32 @@
 package poc.service.impl
 
+import java.util.Calendar
+import java.util.Date
+
+import scala.collection.immutable.StringOps
+import scala.reflect.BeanProperty
+
+import poc.resources.Snippets.groupWorkingTimeList
+import poc.resources.Snippets.string2Date
 import poc.resources.TimetableView
 import poc.service.TimetableService
-import java.util.Date
-import java.text.SimpleDateFormat
-import poc.resources.Snippets._
 
 class TimetableServiceImpl extends TimetableService {
 
+  val BEGIN_HOUR = 8
+  val BEGIN_MINUTE = 30
+
   def cashierTimetable(year: String, week: String, name: String): TimetableView = { 
-    println("TimetableServiceImpl - cashierTimetable method")
-    // TODO remove line below : TEST ONLY
-    val startWeekIdx = new SimpleDateFormat("yyyyMMddHHmm").parse("201107180830")
-    TimetableView(name, ((new Date(), new Date())::Nil).toArray, startWeekIdx) 
+
+    implicit def string2Int(s: String): Int = new StringOps(s).toInt
+
+    val cal = Calendar.getInstance
+    cal.set(Calendar.YEAR, year)
+    cal.set(Calendar.WEEK_OF_YEAR, week)
+    cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+    cal.set(Calendar.HOUR_OF_DAY, BEGIN_HOUR)
+    cal.set(Calendar.MINUTE, BEGIN_MINUTE)
+    TimetableView(name, ((new Date(), new Date())::Nil).toArray, cal.getTime)
   }
   
   def saveSelection(name: String, selection: String, startWeekIdx: Long): TimetableView = {

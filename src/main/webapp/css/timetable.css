@@ -1,21 +1,22 @@
 #feedback {
-	font-size: 1.4em;
+  font-size: 1.4em;
 }
 
 #selectable .ui-selecting {
-	background: #FECA40;
+  background: #FECA40;
 }
 
 #selectable .ui-selected {
-	background: #F39814;
-	color: white;
+  background: #F39814;
+  color: white;
 }
 
 #selectable {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-/* 	width: 60%; */
+  list-style-type: none;
+  margin-left: -20px;
+  margin-top: 1px;
+  padding: 0;
+  /* 	width: 60%; */
 }
 
 /* #selectable li { */
@@ -24,18 +25,45 @@
 /* 	font-size: 1.4em; */
 /* 	height: 18px; */
 /* } */
-
 #selectable li {
-	margin-left: 20px;
-	border: 1px solid black;
-	padding: 1px;
-	float: left;
-	width: 5px;
-	height: 30px;
-	font-size: 4em;
-	text-align: center;
+  margin-left: 20px;
+  border: 1px solid black;
+  padding: 1px;
+  float: left;
+  width: 5px;
+  height: 30px;
+  font-size: 4em;
+  text-align: center;
 }
 
 #name {
-	font-size: 16px;
+  font-size: 16px;
+}
+
+.time-range {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#cashier-timetable {
+  border: 1px solid black;
+}
+
+#header {
+/*   width: 110px; */
+    list-style-type: none;
+  margin-left: 3px;
+  padding: 0;
+}
+
+#header li {
+  margin-left: 6px;
+  margin-right: 6px;
+/*   border: 1px solid black; */
+  padding: 1px;
+  float: left;
+  width: 44px;
+/*   height: 30px; */
+/*   font-size: 4em; */
+  text-align: center;
 }

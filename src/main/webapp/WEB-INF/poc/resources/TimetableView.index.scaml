@@ -23,7 +23,13 @@
 
   #{generateTimetable(weekStartDate)}
 
+  %div(style="clear:both;")
+
   %p
-  
-  #cashier-timetable
-  
+
+  %table(id="cashier-timetable")
+    %tbody
+      = for (day <- Array("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"))
+        %tr
+          %td= day
+          %td(id={day})
