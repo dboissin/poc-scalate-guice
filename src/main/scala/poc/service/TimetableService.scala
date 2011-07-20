@@ -5,6 +5,6 @@ trait TimetableService {
 
   def cashierTimetable(year: String, week: String, name: String): TimetableView
   
-  def saveSelection(name: String, selection: String, startWeekIdx: String): TimetableView
+  def saveSelection(name: String, selection: String, startWeekIdx: Long): TimetableView
   
 }

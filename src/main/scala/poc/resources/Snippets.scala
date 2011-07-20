@@ -7,8 +7,11 @@ import java.text.SimpleDateFormat
 
 object Snippets {
 
-  def generateTimetable(year: Int, month: Int, day: Int) = {
-    val cal = new GregorianCalendar(year, month - 1, day, 8, 30)
+//  def generateTimetable(year: Int, month: Int, day: Int) = {
+//    val cal = new GregorianCalendar(year, month - 1, day, 8, 30)
+  def generateTimetable(date: Date) = {
+    val cal = new GregorianCalendar()
+    cal.setTime(date)
     
     def listDate(calendar: Calendar, idxDay: Int, idxHalfHour: Int): List[Date] = (idxDay, idxHalfHour) match {
       case (6, 8) => calendar.getTime::Nil
@@ -73,4 +76,10 @@ object Snippets {
     val df = new SimpleDateFormat("yyyyMMddHHmm")
     dates map {case (d1, d2) => df.format(d1.getTime) + ", " + df.format(d2.getTime)}
   }
+
+  def dateTuple2StringTuple(dates: List[(Date, Date)]): List[(String, String)] = {
+    val df = new SimpleDateFormat("yyyyMMddHHmm")
+    dates map {case (d1, d2) => (df.format(d1.getTime), df.format(d2.getTime))}
+  }
+
 }

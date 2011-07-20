@@ -15,12 +15,15 @@
   %body
   %h1 Timetable 
 
-  %span(id="name") #{name} 
+  %span(id="name") #{name}
 
   %p
-  #{workingTime.head}
+    %span(id="select-result" style="display:none;")
+    %span(id="weekStartDate" style="display:none;") #{weekStartDate.getTime}
+
+  #{generateTimetable(weekStartDate)}
 
   %p
-    %span(id="select-result") Empty selection
-
-  #{generateTimetable(2011, 7, 18)}
+  
+  #cashier-timetable
+  

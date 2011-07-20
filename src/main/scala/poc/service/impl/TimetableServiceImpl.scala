@@ -10,13 +10,14 @@ class TimetableServiceImpl extends TimetableService {
 
   def cashierTimetable(year: String, week: String, name: String): TimetableView = { 
     println("TimetableServiceImpl - cashierTimetable method")
-    val startWeekIdx = new SimpleDateFormat("yyyyMMdd").format(new Date().getTime())
-    TimetableView(name, (new Date(), new Date())::Nil, Some(startWeekIdx)) //None)
+    // TODO remove line below : TEST ONLY
+    val startWeekIdx = new SimpleDateFormat("yyyyMMddHHmm").parse("201107180830")
+    TimetableView(name, ((new Date(), new Date())::Nil).toArray, startWeekIdx) 
   }
   
-  def saveSelection(name: String, selection: String, startWeekIdx: String): TimetableView = {
+  def saveSelection(name: String, selection: String, startWeekIdx: Long): TimetableView = {
     val workingTime = groupWorkingTimeList(string2Date(selection.split(',').toList))
-    TimetableView(name, workingTime, Some(startWeekIdx))
+    TimetableView(name, (workingTime).toArray, new Date(startWeekIdx))
   }
 
 }

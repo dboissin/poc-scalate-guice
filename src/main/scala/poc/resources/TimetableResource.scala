@@ -9,6 +9,13 @@ import poc.service.TimetableService
 import com.google.inject.Inject
 import javax.ws.rs.FormParam
 import javax.ws.rs.POST
+import javax.ws.rs.core.MultivaluedMap
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider
+import javax.ws.rs.ext.Provider
+import java.io.OutputStream
+import javax.ws.rs.core.MediaType
+import java.lang.reflect.Type
+import scala.collection.immutable.StringOps
 
 @Path("/timetable")
 class TimetableResource extends DefaultRepresentations {
@@ -16,6 +23,8 @@ class TimetableResource extends DefaultRepresentations {
   @Inject
   var service: TimetableService = _
   
+//  implicit def string2Long(rs: StringOps): Long = rs.toLong
+//  
   @GET
   def get() = new Viewable("index", this)
 
@@ -44,7 +53,7 @@ class TimetableResource extends DefaultRepresentations {
       @FormParam("name") name: String,
       @FormParam("selection") selection: String,
       @FormParam("weekidx") startWeekIdx: String) = {
-    service.saveSelection(name, selection, startWeekIdx)
+    service.saveSelection(name, selection, new StringOps(startWeekIdx).toLong)
   }
   
 }
