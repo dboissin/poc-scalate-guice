@@ -6,8 +6,7 @@ import java.util.Date
 import scala.collection.immutable.StringOps
 import scala.reflect.BeanProperty
 
-import poc.resources.Snippets.groupWorkingTimeList
-import poc.resources.Snippets.string2Date
+import poc.resources.Snippets._
 import poc.resources.TimetableView
 import poc.service.TimetableService
 
@@ -26,12 +25,13 @@ class TimetableServiceImpl extends TimetableService {
     cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
     cal.set(Calendar.HOUR_OF_DAY, BEGIN_HOUR)
     cal.set(Calendar.MINUTE, BEGIN_MINUTE)
-    TimetableView(name, ((new Date(), new Date())::Nil).toArray, cal.getTime)
+    val workingTime = (new Date(), new Date())::Nil
+    TimetableView(name, (workingTime).toArray, cal.getTime, countTime(workingTime))
   }
   
   def saveSelection(name: String, selection: String, startWeekIdx: Long): TimetableView = {
     val workingTime = groupWorkingTimeList(string2Date(selection.split(',').toList))
-    TimetableView(name, (workingTime).toArray, new Date(startWeekIdx))
+    TimetableView(name, (workingTime).toArray, new Date(startWeekIdx), countTime(workingTime))
   }
 
 }

@@ -28,9 +28,9 @@ object Snippets {
     val html = listDate(cal, 0, 0) map (d => 
       <li id={df.format(d.getTime)} class="ui-widget-content"></li>)
    
-    genTimetableHeader(cal) + <ol id="selectable">{html}</ol>
+    genTimetableHeader(cal) &+ <ol id="selectable">{html}</ol>
   }
-  
+
   private def genTimetableHeader(cal: java.util.GregorianCalendar): scala.xml.NodeBuffer = {
       
     var header = new NodeBuffer
@@ -71,6 +71,10 @@ object Snippets {
 	    result = new Date(end.getTime - (timeOffset * i)) :: result
 	  result
     }
+  }
+
+  def countTime(dates: List[(Date, Date)]) = {
+    dates.foldLeft(0L) ( (t, r) => (r._2.getTime - r._1.getTime) + t )
   }
 
   def string2Date(dates: List[String]): List[Date] = {

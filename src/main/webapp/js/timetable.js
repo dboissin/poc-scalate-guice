@@ -16,12 +16,12 @@ function sendSelection(selection) {
 	$.post("/timetable/selection",
 			{ "name": $("#name").text(), "selection" : selection, "weekidx" : $("#weekStartDate").text().replace(/\s+/g, "") },
 			function(data){
-				displayTimetable(data.workingTime)
+				displayTimetable(data.workingTime, data.workTime)
 			}
 			, "json");
 }
 
-function displayTimetable(workingTime) {
+function displayTimetable(workingTime, workTime) {
 	if (workingTime && workingTime.length != 0) {
 		var days = new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
 
@@ -35,9 +35,14 @@ function displayTimetable(workingTime) {
 			$('#' + days[d1.getDay()]).append("<span class=\"time-range\" >" + d1.getHours() + "h" + pad2(d1.getMinutes())
 					+ " --> " + d2.getHours() + "h" + pad2(d2.getMinutes()) + "</span>");
 		}
+
+		var hours = Math.floor(workTime/3600000);
+		var divisor_for_minutes = workTime % 3600000;
+		var minutes = Math.floor(divisor_for_minutes / 60000);
+		$('#total').text(hours + "h" + pad2(minutes));
 	}
 }
 
 function pad2(number) {
-    return (number < 10 ? '0' : '') + number
+	return (number < 10 ? '0' : '') + number
 }
