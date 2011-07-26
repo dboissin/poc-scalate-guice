@@ -20,7 +20,7 @@ object BootStrap {
   
   def testBootStrapDB () {
     inTransaction {
-      import poc.schema.Schema._
+      import poc.schema.TimetableDb._
 
       drop  // Bad idea in production application !!!
       create
