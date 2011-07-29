@@ -13,12 +13,9 @@ class ServletContextListener extends GuiceServletContextListener {
     override def configureServlets() = {
     	super.configureServlets
     	
-    	BootStrap.startDatabaseSession
     	BootStrap.testBootStrapDB
     	
     	bind(classOf[TimetableService]).to(classOf[TimetableServiceImpl])
-//    	bind(classOf[MessageBodyReader[Object]]).to(classOf[JacksonJsonProvider])
-//        bind(classOf[MessageBodyWriter[Object]]).to(classOf[JacksonJsonProvider])
     }
     
     override def resourcePackageNames = "poc.resources" :: "org.codehaus.jackson.jaxrs" :: super.resourcePackageNames

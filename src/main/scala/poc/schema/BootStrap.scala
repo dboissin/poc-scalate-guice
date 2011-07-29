@@ -10,15 +10,10 @@ import poc.model.WorkingTimeRange
 
 object BootStrap {
 
-  def startDatabaseSession() {
-    Class.forName("org.h2.Driver");
-    SessionFactory.concreteFactory = Some(()=>
-      Session.create(
-        java.sql.DriverManager.getConnection("jdbc:h2:mem:example", "sa", ""),
-        new H2Adapter)
-    )
-  }
-  
+  SessionFactory.concreteFactory = Some(() => connection)
+
+  def connection = Session.create(DbPool.cpds.getConnection, new H2Adapter)
+    
   def testBootStrapDB () {
     inTransaction {
       import poc.schema.TimetableDb._
