@@ -10,3 +10,11 @@ class Cashier (
 ) extends KeyedEntity[Long] {
   lazy val timetables: OneToMany[Timetable] = TimetableDb.cashierToTimetables.left(this)
 }
+
+object Cashier {
+  import poc.schema.TimetableDb._
+  import org.squeryl.PrimitiveTypeMode._
+  
+  def findByName(name: String) =
+    cashiers.where(c => c.name === name).single
+}

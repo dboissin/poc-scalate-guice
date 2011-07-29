@@ -18,7 +18,7 @@ object BootStrap {
     inTransaction {
       import poc.schema.TimetableDb._
 
-      drop  // Bad idea in production application !!!
+//      drop  // Bad idea in production application !!!
       create
       printDdl
 
@@ -40,15 +40,14 @@ object BootStrap {
       println ("after insert => blopId : " + blop.id)
 
 
-      val wtr = new WorkingTimeRange(new Timestamp(System.currentTimeMillis), new Timestamp(System.currentTimeMillis + 60000))
-      workingTimeRanges.insert(wtr)
-
       //timetables.insert(t)
       val t3 = timetables.where(t => t.id === 2L).single
 
+      val wtr = new WorkingTimeRange(new Timestamp(System.currentTimeMillis),
+          new Timestamp(System.currentTimeMillis + 60000), t3.id)
       t3.workingTimeRanges.associate(wtr)
-      t3.workingTimeRanges.dissociateAll
-      t3.workingTimeRanges.associate(wtr)
+      t3.workingTimeRanges.deleteAll
+      //t3.workingTimeRanges.associate(wtr)
 //      schedules.associate(t, wtr)
 
       //timetables.insert(new Timetable(new Timestamp(System.currentTimeMillis), 1L))

@@ -5,7 +5,6 @@ import org.squeryl.PrimitiveTypeMode._
 import poc.model.Cashier
 import poc.model.Timetable
 import poc.model.WorkingTimeRange
-import poc.model.Schedule
 
 object TimetableDb extends Schema {
 
@@ -25,12 +24,12 @@ object TimetableDb extends Schema {
     columns(workingTimeRange.begin, workingTimeRange.end) are (unique)
   ))
 
-  val schedule =
-    manyToManyRelation(timetables, workingTimeRanges).
-    via[Schedule]((t, w, s) => (t.id === s.timetableId, w.id === s.workingTimeRangeId))
-
   val cashierToTimetables =
     oneToManyRelation(cashiers, timetables).
     via((c, t) => c.id === t.cashierId)
+
+  val timetableToWorkingTimeRanges = 
+    oneToManyRelation(timetables, workingTimeRanges).
+    via((t, wtr) => t.id === wtr.timetableId)
 
 }
