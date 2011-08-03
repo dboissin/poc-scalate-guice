@@ -97,4 +97,9 @@ object Snippets {
     dates map {case (d1, d2) => (df.format(d1.getTime), df.format(d2.getTime))}
   }
 
+  def stringTuple2DateTuple(dates: List[(String, String)]): List[(Date, Date)] = {
+    val df = new SimpleDateFormat("yyyyMMddHHmm")
+    dates map {case (d1, d2) => (df.parse(d1), df.parse(d2))}
+  }
+
 }

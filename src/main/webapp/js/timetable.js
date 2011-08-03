@@ -14,7 +14,7 @@ $(function() {
 
 function sendSelection(selection) {
 	$.post("/timetable/selection",
-			{ "name": $("#name").text(), "selection" : selection, "weekidx" : $("#weekStartDate").text().replace(/\s+/g, "") },
+			{ "name": $("#name").text(), "selection" : selection, "weekidx" : $("#weekStartDate").text() },
 			function(data){
 				displayTimetable(data.workingTime, data.workTime)
 			}
