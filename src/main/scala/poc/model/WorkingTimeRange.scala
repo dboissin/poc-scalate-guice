@@ -11,3 +11,16 @@ class WorkingTimeRange (
 )  extends KeyedEntity[Long] {
   lazy val timetables = TimetableDb.timetableToWorkingTimeRanges.right(this)
 }
+
+object WorkingTimeRange {
+  import poc.schema.TimetableDb._
+  import org.squeryl.PrimitiveTypeMode._
+
+  def findByTimetable(timetableId: Long) = {
+    from(workingTimeRanges)((w) =>
+      where(w.timetableId === timetableId)
+      select(w)
+    )
+  }
+
+}

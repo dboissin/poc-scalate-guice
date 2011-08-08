@@ -11,7 +11,11 @@
             :src  => "/js/timetable.js"}
     %link(href={uri("/css/ui-lightness/jquery-ui-1.8.14.custom.css")} rel="stylesheet" type="text/css")
     %link(href={uri("/css/timetable.css")} rel="stylesheet" type="text/css")
-    
+
+    = if (workingTime != null)
+      %script(type="text/javascript")
+        ! $(document).ready(function() {displayTimetable(#{getJsonWorkingTime.toString}, '#{workTime.toString}');});
+
   %body
   %h1 Timetable 
 
@@ -21,7 +25,7 @@
     %span(id="select-result" style="display:none;")
     %span(id="weekStartDate" style="display:none;") #{weekStartDate.getTime.toString}
 
-  #{generateTimetable(weekStartDate)}
+  #{generateTimetable(weekStartDate, workingTime)}
 
   %div(style="clear:both;")
 

@@ -16,7 +16,7 @@ function sendSelection(selection) {
 	$.post("/timetable/selection",
 			{ "name": $("#name").text(), "selection" : selection, "weekidx" : $("#weekStartDate").text() },
 			function(data){
-				displayTimetable(data.workingTime, data.workTime)
+				displayTimetable(data.workingTime.x, data.workTime);
 			}
 			, "json");
 }

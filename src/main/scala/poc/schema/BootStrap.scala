@@ -18,7 +18,7 @@ object BootStrap {
     inTransaction {
       import poc.schema.TimetableDb._
 
-//      drop  // Bad idea in production application !!!
+      drop  // Bad idea in production application !!!
       create
       printDdl
 

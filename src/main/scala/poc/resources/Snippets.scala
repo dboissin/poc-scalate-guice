@@ -8,7 +8,7 @@ import scala.xml.NodeBuffer
 
 object Snippets {
 
-  def generateTimetable(date: Date) = {
+  def generateTimetable(date: Date, selectedTime: Option[Array[(Date, Date)]] = None) = {
     val cal = new GregorianCalendar()
     cal.setTime(date)
     
@@ -24,10 +24,17 @@ object Snippets {
         calendar.getTime::listDate(c, d, hh + 1)
     }
     
+    val selected = selectedTime match {
+      case Some(s) => date2String(detailWorkingTimeList(s.toList))
+      case None => Nil
+    }
     val df = new SimpleDateFormat("yyyyMMddHHmm")
-    val html = listDate(cal, 0, 0) map (d => 
-      <li id={df.format(d.getTime)} class="ui-widget-content"></li>)
-   
+    val html = listDate(cal, 0, 0) map {d =>
+        val id = df.format(d.getTime)
+        val uiselected = if (selected.contains(id)) " ui-selected" else ""
+        <li id={id} class={"ui-widget-content" + uiselected}></li>
+    }
+
     genTimetableHeader(cal) &+ <ol id="selectable">{html}</ol>
   }
 
@@ -64,6 +71,7 @@ object Snippets {
    * 30 * 60 * 1000 = 1800000
    */
   def detailWorkingTimeList(dates: List[(Date, Date)], timeOffset: Int = 1800000): List[Date] = {
+    if (dates == null) return Nil
     dates flatMap { case (begin, end) => 
       val nb = (end.getTime - begin.getTime) / timeOffset 
       var result = end::Nil

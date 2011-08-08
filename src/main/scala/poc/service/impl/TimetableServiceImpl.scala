@@ -30,13 +30,17 @@ class TimetableServiceImpl extends TimetableService {
     cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
     cal.set(Calendar.HOUR_OF_DAY, BEGIN_HOUR)
     cal.set(Calendar.MINUTE, BEGIN_MINUTE)
+    cal.set(Calendar.SECOND, 0)
+    cal.set(Calendar.MILLISECOND, 0)
 
-    val workingTime = (new Date(), new Date())::Nil
     inTransaction {
       Timetable.findByWeekAndCashier(name, new Timestamp(cal.getTime.getTime))
-    } match {
-      case Some(t) => TimetableView(name, workingTime.toArray, t.startWeek, countTime(workingTime))
-      case None => TimetableView(name, workingTime.toArray, cal.getTime, 0L)
+      match {
+        case Some(t) =>
+          val workingTime = WorkingTimeRange.findByTimetable(t.id).toList map (w => (w.begin, w.end))
+          TimetableView(name, Some(workingTime.toArray), t.startWeek, countTime(workingTime))
+        case None => TimetableView(name, None, cal.getTime, 0L)
+      }
     }
   }
   
@@ -54,7 +58,7 @@ class TimetableServiceImpl extends TimetableService {
       }
     }
 
-    TimetableView(name, workingTime.toArray, new Date(startWeekIdx), countTime(workingTime))
+    TimetableView(name, Some(workingTime.toArray), new Date(startWeekIdx), countTime(workingTime))
   }
 
 }
